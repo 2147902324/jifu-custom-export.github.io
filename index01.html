@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jifu Custom Export - Mobile Case Personalization</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6C63FF', // Artistic purple primary color
+            secondary: '#FF9D6C', // Warm orange accent color
+            accent: '#F0E68C', // Golden yellow highlight color
+            neutral: {
+              100: '#F5F7FA',
+              200: '#E4E7ED',
+              300: '#C0C6CF',
+              400: '#909399',
+              500: '#606266',
+              600: '#303133',
+              700: '#1E1E1E',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      .animate-slide-up {
+        animation: slideUp 0.5s ease-out;
+      }
+      .animate-pulse-slow {
+        animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .bg-gradient-tech {
+        background: linear-gradient(135deg, #2A246A 0%, #1E1E3F 100%);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 25px -5px rgba(108, 99, 255, 0.2);
+      }
+      .art-border {
+        border: 2px solid #F0E68C;
+      }
+      .art-shadow {
+        box-shadow: 0 0 15px rgba(240, 230, 140, 0.3);
+      }
+      .phone-case-preview {
+        transition: transform 0.5s ease-out;
+      }
+      .phone-case-preview:hover {
+        transform: scale(1.05) rotate(3deg);
+      }
+      
+      /* Advanced background effects */
+      .bg-noise {
+        position: relative;
+      }
+      .bg-noise::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        opacity: 0.03;
+        pointer-events: none;
+      }
+      .bg-gradient-advanced {
+        background: 
+          radial-gradient(circle at 70% 30%, rgba(108, 99, 255, 0.2) 0%, transparent 40%),
+          radial-gradient(circle at 30% 70%, rgba(255, 157, 108, 0.15) 0%, transparent 40%),
+          linear-gradient(135deg, #2A246A 0%, #1E1E3F 100%);
+        background-attachment: fixed;
+      }
+      .animate-glow {
+        animation: glow 8s ease-in-out infinite alternate;
+      }
+      @keyframes glow {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+      
+      /* Page transition animations */
+      .page-transition-enter {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      .page-transition-enter-active {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 500ms, transform 500ms;
+      }
+      .page-transition-exit {
+        opacity: 1;
+      }
+      .page-transition-exit-active {
+        opacity: 0;
+        transition: opacity 300ms;
+      }
+      
+      /* Scroll reveal animations */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+      
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      
+      /* Smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+  </style>
+</head>
+
+<body class="font-inter bg-gradient-advanced bg-noise text-neutral-100 min-h-screen flex flex-col animate-glow">
+  <!-- Top Notification Bar -->
+  <div class="bg-primary text-white text-center py-2 text-sm">
+    <p>Global Mobile Case Customization | Only $3.99 Per Piece | Accept Custom Orders</p>
+  </div>
+
+  <!-- Navigation Bar -->
+  <header class="bg-white/10 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all duration-300" id="navbar">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-white focus:outline-none" id="mobile-menu-button">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+        
+        <!-- Logo -->
+        <a href="#home" class="flex items-center">
+          <span class="text-white text-2xl font-bold">Jifu Custom Export</span>
+          <span class="text-white/70 text-sm ml-2 hidden md:inline-block">Global Sourcing & Export</span>
+        </a>
+        
+        <!-- Search Box - Tablet and Up -->
+        <div class="hidden md:flex flex-1 max-w-xl mx-8">
+          <div class="relative w-full">
+            <input type="text" placeholder="Search for phone case designs..." class="w-full pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+            <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50"></i>
+          </div>
+        </div>
+        
+        <!-- User Actions -->
+        <div class="flex items-center space-x-4 md:space-x-6">
+          <button class="text-white hover:text-primary transition-colors relative">
+            <i class="fa-regular fa-heart text-xl"></i>
+            <span class="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+          </button>
+          <button class="text-white hover:text-primary transition-colors relative">
+            <i class="fa-solid fa-shopping-cart text-xl"></i>
+            <span class="absolute -top-2 -right-2 bg-secondary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">2</span>
+          </button>
+          <button class="text-white hover:text-primary transition-colors">
+            <i class="fa-regular fa-user text-xl"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Search Box - Mobile -->
+      <div class="md:hidden pb-4">
+        <div class="relative w-full">
+          <input type="text" placeholder="Search for phone case designs..." class="w-full pl-10 pr-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+            <i class="fa-solid fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50"></i>
+          </div>
+        </div>
+      
+      <!-- Category Navigation - Tablet and Up -->
+      <nav class="hidden md:flex items-center justify-between py-3 border-t border-white/10">
+        <ul class="flex space-x-8">
+          <li><a href="#home" class="font-medium text-white border-b-2 border-primary pb-1">Home</a></li>
+          <li><a href="#customize" class="font-medium hover:text-primary transition-colors">Customize</a></li>
+          <li><a href="#gallery" class="font-medium hover:text-primary transition-colors">Gallery</a></li>
+          <li><a href="#about" class="font-medium hover:text-primary transition-colors">About</a></li>
+          <li><a href="#contact" class="font-medium hover:text-primary transition-colors">Contact</a></li>
+        </ul>
+        <div>
+          <a href="#" class="text-sm text-white hover:text-primary transition-colors flex items-center">
+            <i class="fa-brands fa-instagram mr-1"></i>
+            <i class="fa-brands fa-tiktok mr-1"></i>
+            <span class="ml-2">Follow us on social media</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-white/10 backdrop-blur-md absolute w-full shadow-lg animate-fade-in" id="mobile-menu">
+      <div class="container mx-auto px-4 py-3">
+        <ul class="space-y-3">
+          <li><a href="#home" class="block py-2 px-4 bg-primary/20 text-white font-medium rounded">Home</a></li>
+          <li><a href="#customize" class="block py-2 px-4 hover:bg-white/10 rounded transition-colors">Customize</a></li>
+          <li><a href="#gallery" class="block py-2 px-4 hover:bg-white/10 rounded transition-colors">Gallery</a></li>
+          <li><a href="#about" class="block py-2 px-4 hover:bg-white/10 rounded transition-colors">About</a></li>
+          <li><a href="#contact" class="block py-2 px-4 hover:bg-white/10 rounded transition-colors">Contact</a></li>
+        </ul>
+        <div class="pt-3 border-t border-white/10">
+          <a href="#" class="block py-2 px-4 text-sm text-white hover:bg-primary/20 rounded transition-colors">
+            <i class="fa-brands fa-instagram mr-1"></i>
+            <i class="fa-brands fa-tiktok mr-1"></i>
+            <span class="ml-2">Follow us on social media</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Container -->
+  <main class="flex-1">
+    <!-- Home Section -->
+    <section id="home" class="relative overflow-hidden">
+      <div class="carousel-container relative h-[200px] md:h-[400px] lg:h-[500px]">
+        <!-- Carousel Slide 1 -->
+        <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-100">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-primary/40 z-10"></div>
+          <img src="https://picsum.photos/id/119/1600/800" alt="Custom phone cases" class="w-full h-full object-cover">
+          <div class="absolute inset-0 z-20 flex items-center">
+            <div class="container mx-auto px-4 md:px-8">
+              <div class="max-w-xl animate-slide-up">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-4 text-shadow">Global Mobile Case Customization</h2>
+                <p class="text-white/90 text-[clamp(1rem,1.5vw,1.2rem)] mb-6 max-w-md">Sourced directly from our factory in Yiwu, China. Worldwide shipping. Only $3.99 per piece.</p>
+                <button class="bg-white text-primary font-medium px-6 py-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all" onclick="document.getElementById('customize').scrollIntoView({behavior: 'smooth'})">
+                  Start Customizing <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Carousel Slide 2 (Initially Hidden) -->
+        <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
+          <div class="absolute inset-0 bg-gradient-to-r from-secondary/80 to-secondary/40 z-10"></div>
+          <img src="https://picsum.photos/id/160/1600/800" alt="Global shipping" class="w-full h-full object-cover">
+          <div class="absolute inset-0 z-20 flex items-center">
+            <div class="container mx-auto px-4 md:px-8">
+              <div class="max-w-xl">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-4 text-shadow">Worldwide Shipping</h2>
+                <p class="text-white/90 text-[clamp(1rem,1.5vw,1.2rem)] mb-6 max-w-md">Direct from our factory in Yiwu, China to your doorstep worldwide, safe and fast.</p>
+                <button class="bg-white text-secondary font-medium px-6 py-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all" onclick="document.getElementById('customize').scrollIntoView({behavior: 'smooth'})">
+                  Learn More <i class="fa-solid fa-truck ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Carousel Slide 3 (Initially Hidden) -->
+        <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out opacity-0">
+          <div class="absolute inset-0 bg-gradient-to-r from-accent/80 to-accent/40 z-10"></div>
+          <img src="https://picsum.photos/id/201/1600/800" alt="Custom design" class="w-full h-full object-cover">
+          <div class="absolute inset-0 z-20 flex items-center">
+            <div class="container mx-auto px-4 md:px-8">
+              <div class="max-w-xl">
+                <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-white mb-4 text-shadow">Personalized Design Service</h2>
+                <p class="text-white/90 text-[clamp(1rem,1.5vw,1.2rem)] mb-6 max-w-md">Upload your design, we'll create a unique phone case just for you.</p>
+                <button class="bg-white text-neutral-700 font-medium px-6 py-3 rounded-full hover:bg-neutral-100 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all" onclick="document.getElementById('customize').scrollIntoView({behavior: 'smooth'})">
+                  Start Designing <i class="fa-solid fa-paint-brush ml-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Carousel Controls -->
+        <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md z-30 transition-all backdrop-blur-sm" id="prev-slide">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md z-30 transition-all backdrop-blur-sm" id="next-slide">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
+          <button class="w-3 h-3 rounded-full bg-white opacity-100 transition-opacity carousel-indicator" data-index="0"></button>
+          <button class="w-3 h-3 rounded-full bg-white/50 opacity-50 transition-opacity carousel-indicator" data-index="1"></button>
+          <button class="w-3 h-3 rounded-full bg-white/50 opacity-50 transition-opacity carousel-indicator" data-index="2"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-12 md:py-16 reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">Why Choose Us</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">We offer the best custom phone case experience</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Feature 1 -->
+          <div class="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover">
+            <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+              <i class="fa-solid fa-paint-brush text-primary text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Personalized Design</h3>
+            <p class="text-neutral-300">Upload your design, we'll create a unique phone case just for you.</p>
+          </div>
+          
+          <!-- Feature 2 -->
+          <div class="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover">
+            <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+              <i class="fa-solid fa-truck text-primary text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Global Shipping</h3>
+            <p class="text-neutral-300">Direct from our factory in Yiwu to worldwide destinations, safe and fast.</p>
+          </div>
+          
+          <!-- Feature 3 -->
+          <div class="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover">
+            <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+              <i class="fa-solid fa-shield text-primary text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Quality Assurance</h3>
+            <p class="text-neutral-300">All products are strictly inspected to ensure high quality and durability.</p>
+          </div>
+          
+          <!-- Feature 4 -->
+          <div class="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover">
+            <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-4">
+              <i class="fa-solid fa-comments text-primary text-xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">24/7 Support</h3>
+            <p class="text-neutral-300">Our professional customer service team is always ready to assist you.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customization Process -->
+    <section id="customize" class="py-12 md:py-16 bg-white/5 backdrop-blur-sm reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">Customization Process</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">Easy steps to create your personalized phone case</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- Step 1 -->
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">1</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Upload Design</h3>
+            <p class="text-neutral-300">Upload your design or choose from our templates</p>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">2</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Select Model</h3>
+            <p class="text-neutral-300">Choose your phone model and case type</p>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">3</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Confirm Details</h3>
+            <p class="text-neutral-300">Review and confirm your order details</p>
+          </div>
+          
+          <!-- Step 4 -->
+          <div class="text-center reveal">
+            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-2xl font-bold text-primary">4</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">Receive Your Case</h3>
+            <p class="text-neutral-300">We'll produce and ship your custom case</p>
+          </div>
+        </div>
+        
+        <div class="text-center mt-10">
+          <a href="#customize-form-section" class="inline-flex items-center bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-full transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+            Start Customizing Now <i class="fa-solid fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Gallery -->
+    <section id="gallery" class="py-12 md:py-16 reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">Inspiration Gallery</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">Browse our gallery for design ideas</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="relative overflow-hidden rounded-lg group reveal">
+            <img src="https://picsum.photos/id/26/400/400" alt="Phone case design" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-800/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-4">
+                <h4 class="font-semibold">Abstract Art</h4>
+                <button class="text-accent text-sm mt-1 hover:underline">Use this design</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="relative overflow-hidden rounded-lg group reveal">
+            <img src="https://picsum.photos/id/28/400/400" alt="Phone case design" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-800/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-4">
+                <h4 class="font-semibold">Nature Scene</h4>
+                <button class="text-accent text-sm mt-1 hover:underline">Use this design</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="relative overflow-hidden rounded-lg group reveal">
+            <img src="https://picsum.photos/id/42/400/400" alt="Phone case design" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-800/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-4">
+                <h4 class="font-semibold">Minimalist Style</h4>
+                <button class="text-accent text-sm mt-1 hover:underline">Use this design</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="relative overflow-hidden rounded-lg group reveal">
+            <img src="https://picsum.photos/id/64/400/400" alt="Phone case design" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-800/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end">
+              <div class="p-4">
+                <h4 class="font-semibold">Geometric Patterns</h4>
+                <button class="text-accent text-sm mt-1 hover:underline">Use this design</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Customize Form Section -->
+    <section id="customize-form-section" class="py-16 md:py-24 reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">Customize Your Phone Case</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">Upload your design and create a unique phone case that reflects your personal style</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <!-- Customization Form -->
+          <div class="bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10">
+            <h3 class="text-xl font-bold mb-6">Design Details</h3>
+            <form id="customize-form">
+              <div class="mb-6">
+                <label for="phone-model" class="block text-sm font-medium mb-2">Phone Model</label>
+                <select id="phone-model" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                  <option value="">Select your phone model</option>
+                  <option value="iphone-14">iPhone 14</option>
+                  <option value="iphone-14-pro">iPhone 14 Pro</option>
+                  <option value="iphone-14-pro-max">iPhone 14 Pro Max</option>
+                  <option value="iphone-13">iPhone 13</option>
+                  <option value="iphone-13-pro">iPhone 13 Pro</option>
+                  <option value="iphone-13-pro-max">iPhone 13 Pro Max</option>
+                  <option value="samsung-s23">Samsung Galaxy S23</option>
+                  <option value="samsung-s23-plus">Samsung Galaxy S23+</option>
+                  <option value="samsung-s23-ultra">Samsung Galaxy S23 Ultra</option>
+                  <option value="other">Other (specify in notes)</option>
+                </select>
+              </div>
+              
+              <div class="mb-6">
+                <label for="case-type" class="block text-sm font-medium mb-2">Case Type</label>
+                <select id="case-type" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+                  <option value="">Select case type</option>
+                  <option value="transparent">Transparent</option>
+                  <option value="hard">Hard Case</option>
+                  <option value="silicone">Silicone</option>
+                  <option value="leather">Leather</option>
+                </select>
+              </div>
+              
+              <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Upload Design</label>
+                <div class="border-2 border-dashed border-white/30 rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer" id="file-upload-area">
+                  <i class="fa-solid fa-cloud-upload text-4xl text-white/50 mb-4"></i>
+                  <p class="text-white/70 mb-2">Drag and drop your design here</p>
+                  <p class="text-white/50 text-sm">or click to browse files</p>
+                  <input type="file" id="design-file" class="hidden" accept="image/*">
+                </div>
+                <div id="file-preview" class="mt-4 hidden">
+                  <img id="preview-image" src="" alt="Design preview" class="max-w-full h-auto rounded-lg">
+                  <button type="button" id="remove-file" class="mt-2 text-accent hover:text-red-500 text-sm">Remove</button>
+                </div>
+              </div>
+              
+              <div class="mb-6">
+                <label for="quantity" class="block text-sm font-medium mb-2">Quantity</label>
+                <input type="number" id="quantity" min="1" value="1" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+              </div>
+              
+              <div class="mb-6">
+                <label for="notes" class="block text-sm font-medium mb-2">Additional Notes (Optional)</label>
+                <textarea id="notes" rows="3" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Any special requirements or instructions"></textarea>
+              </div>
+              
+              <h3 class="text-xl font-bold mb-6 mt-10">Shipping Information</h3>
+              
+              <div class="mb-6">
+                <label for="full-name" class="block text-sm font-medium mb-2">Full Name</label>
+                <input type="text" id="full-name" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your full name">
+              </div>
+              
+              <div class="mb-6">
+                <label for="address" class="block text-sm font-medium mb-2">Address</label>
+                <input type="text" id="address" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your shipping address">
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div>
+                  <label for="city" class="block text-sm font-medium mb-2">City</label>
+                  <input type="text" id="city" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="City">
+                </div>
+                <div>
+                  <label for="country" class="block text-sm font-medium mb-2">Country</label>
+                  <input type="text" id="country" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Country">
+                </div>
+              </div>
+              
+              <div class="mb-6">
+                <label for="phone" class="block text-sm font-medium mb-2">Phone Number</label>
+                <input type="tel" id="phone" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your phone number">
+              </div>
+              
+              <div class="mb-8">
+                <label for="email" class="block text-sm font-medium mb-2">Email Address</label>
+                <input type="email" id="email" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your email address">
+              </div>
+              
+              <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-4 rounded-lg transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                Submit Order <i class="fa-solid fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+          
+          <!-- Preview Section -->
+          <div class="bg-white/5 backdrop-blur-sm p-8 rounded-xl border border-white/10 flex flex-col items-center justify-center">
+            <h3 class="text-xl font-bold mb-6">Preview</h3>
+            <div class="relative mb-8 phone-case-preview">
+              <div class="relative w-[280px] h-[560px] bg-neutral-800 rounded-[40px] shadow-2xl overflow-hidden border-8 border-neutral-900">
+                <!-- Phone Screen -->
+                <div class="absolute inset-0 bg-black">
+                  <div class="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-neutral-900/80 to-transparent flex items-center justify-center">
+                    <div class="w-32 h-6 bg-neutral-900 rounded-full relative">
+                      <div class="absolute top-1/2 left-6 transform -translate-y-1/2 w-4 h-4 bg-neutral-800 rounded-full"></div>
+                      <div class="absolute top-1/2 right-6 transform -translate-y-1/2 w-8 h-3 bg-neutral-800 rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  <!-- Mock content -->
+                  <div class="absolute inset-0 pt-16 flex flex-col items-center justify-center">
+                    <div class="text-center">
+                      <h4 class="text-white text-2xl font-bold mb-2">Your Design Here</h4>
+                      <p class="text-white/70">Upload an image to preview your custom phone case</p>
+                    </div>
+                    
+                    <div class="mt-8 w-48 h-48 bg-white/10 rounded-lg flex items-center justify-center">
+                      <i class="fa-solid fa-mobile-screen-button text-6xl text-white/30"></i>
+                    </div>
+                  </div>
+                  
+                  <!-- Bottom bar -->
+                  <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-white/50 rounded-full"></div>
+                </div>
+                
+                <!-- Case Design Overlay -->
+                <div id="case-design-overlay" class="absolute inset-0 opacity-0 transition-opacity duration-300">
+                  <img id="design-preview" src="" alt="Case design preview" class="w-full h-full object-cover">
+                </div>
+              </div>
+              
+              <!-- Case Border -->
+              <div class="absolute top-0 left-0 right-0 bottom-0 border-2 border-primary/50 rounded-[40px] pointer-events-none"></div>
+              
+              <!-- Volume Buttons -->
+              <div class="absolute left-[-8px] top-[100px] w-2 h-20 bg-neutral-900 rounded-l-lg"></div>
+              <div class="absolute left-[-8px] top-[140px] w-2 h-32 bg-neutral-900 rounded-l-lg"></div>
+              
+              <!-- Power Button -->
+              <div class="absolute right-[-8px] top-[140px] w-2 h-24 bg-neutral-900 rounded-r-lg"></div>
+            </div>
+            
+            <div class="w-full">
+              <h4 class="text-lg font-medium mb-4">Price Calculation</h4>
+              <div class="space-y-2 mb-6">
+                <div class="flex justify-between">
+                  <span class="text-neutral-300">Base Price (1 piece)</span>
+                  <span>$3.99</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-neutral-300">Shipping</span>
+                  <span>$5.99</span>
+                </div>
+                <div class="flex justify-between font-medium border-t border-white/10 pt-2">
+                  <span>Total</span>
+                  <span>$9.98</span>
+                </div>
+              </div>
+              
+              <div class="bg-primary/10 p-4 rounded-lg border border-primary/20">
+                <p class="text-sm text-white/80"><i class="fa-solid fa-info-circle mr-1"></i> Price will be adjusted based on quantity and shipping destination</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-12 md:py-16 bg-white/5 backdrop-blur-sm reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">About Jifu Custom Export</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">Your trusted partner for custom mobile case manufacturing and export</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <div class="reveal">
+            <h3 class="text-2xl font-bold mb-6">Our Story</h3>
+            <p class="text-neutral-300 mb-6 leading-relaxed">
+              Jifu Custom Export is a newly established internet-based company specializing in custom mobile case manufacturing and global export. We are based in Yiwu, China, the world's largest小商品 hub.
+            </p>
+            <p class="text-neutral-300 mb-6 leading-relaxed">
+              We act as the bridge between customers worldwide and our partner factories, offering flexible small-batch production services. Our mission is to provide high-quality, affordable, and personalized mobile cases to customers around the globe.
+            </p>
+            <p class="text-neutral-300 leading-relaxed">
+              Whether you're an individual looking for a unique phone case, a small business seeking custom merchandise, or an e-commerce seller in need of private label products, we've got you covered.
+            </p>
+          </div>
+          <div class="relative reveal">
+            <img src="https://picsum.photos/id/119/800/600" alt="Our factory" class="w-full h-auto rounded-xl shadow-xl">
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover reveal">
+            <div class="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <i class="fa-solid fa-handshake text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-center mb-4">Our Mission</h3>
+            <p class="text-neutral-300 text-center">
+              To provide high-quality, personalized mobile cases at affordable prices, with exceptional customer service.
+            </p>
+          </div>
+          
+          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover reveal">
+            <div class="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <i class="fa-solid fa-globe text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-center mb-4">Our Vision</h3>
+            <p class="text-neutral-300 text-center">
+              To become the world's leading platform for custom mobile case manufacturing and export.
+            </p>
+          </div>
+          
+          <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 card-hover reveal">
+            <div class="w-14 h-14 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
+              <i class="fa-solid fa-users text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-center mb-4">Our Advantage</h3>
+            <p class="text-neutral-300 text-center">
+              Direct factory sourcing, flexible small-batch production, and worldwide shipping.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="py-12 md:py-16 reveal">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">Contact Us</h2>
+          <p class="text-neutral-300 max-w-2xl mx-auto">We're here to help with your custom mobile case needs</p>
+        </div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div class="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 reveal">
+            <div class="flex items-start mb-4">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa-solid fa-envelope text-primary"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold mb-1">Email</h3>
+                <p class="text-neutral-300">M20050824m@163.com</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start mb-4">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa-brands fa-instagram text-primary"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold mb-1">Instagram</h3>
+                <p class="text-neutral-300">@M20050824m</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+                <i class="fa-brands fa-tiktok text-primary"></i>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold mb-1">TikTok</h3>
+                <p class="text-neutral-300">@shanghai.guider.je</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="lg:col-span-2 bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 reveal">
+            <h3 class="text-xl font-bold mb-6">Send us a message</h3>
+            <form id="contact-form">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="name" class="block text-sm font-medium mb-2">Name</label>
+                  <input type="text" id="name" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your name">
+                </div>
+                <div>
+                  <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                  <input type="email" id="email" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your email">
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label for="subject" class="block text-sm font-medium mb-2">Subject</label>
+                <input type="text" id="subject" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Subject">
+              </div>
+              
+              <div class="mb-6">
+                <label for="message" class="block text-sm font-medium mb-2">Message</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" placeholder="Your message"></textarea>
+              </div>
+              
+              <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all">
+                Send Message <i class="fa-solid fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white/5 backdrop-blur-md border-t border-white/10 py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Jifu Custom Export</h3>
+          <p class="text-neutral-300 mb-4">Your trusted partner for custom mobile case manufacturing and global export.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa-brands fa-instagram text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa-brands fa-tiktok text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa-brands fa-facebook text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
+              <i class="fa-brands fa-twitter text-white"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#home" class="text-neutral-300 hover:text-white transition-colors">Home</a></li>
+            <li><a href="#customize" class="text-neutral-300 hover:text-white transition-colors">Customize</a></li>
+            <li><a href="#gallery" class="text-neutral-300 hover:text-white transition-colors">Gallery</a></li>
+            <li><a href="#about" class="text-neutral-300 hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#contact" class="text-neutral-300 hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Help & Support</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors">FAQs</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors">Shipping Policy</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors">Return Policy</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+          <p class="text-neutral-300 mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+          <form class="mb-4">
+            <div class="flex">
+              <input type="email" placeholder="Your email address" class="flex-1 px-4 py-2 rounded-l-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all">
+              <button type="submit" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+          </form>
+          <p class="text-neutral-400 text-sm">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8 text-center text-neutral-400 text-sm">
+        <p>&copy; 2025 Jifu Custom Export. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary/80 hover:bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform transition-all duration-300 opacity-0 translate-y-10">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (scrollTop > 100) {
+        navbar.classList.add('bg-white/20');
+        navbar.classList.remove('bg-white/10');
+      } else {
+        navbar.classList.remove('bg-white/20');
+        navbar.classList.add('bg-white/10');
+      }
+      
+      lastScrollTop = scrollTop;
+    });
+    
+    // Carousel functionality
+    const carouselSlides = document.querySelectorAll('.carousel-slide');
+    const carouselIndicators = document.querySelectorAll('.carousel-indicator');
+    const prevButton = document.getElementById('prev-slide');
+    const nextButton = document.getElementById('next-slide');
+    let currentSlide = 0;
+    
+    function showSlide(index) {
+      carouselSlides.forEach((slide, i) => {
+        slide.style.opacity = i === index ? '1' : '0';
+      });
+      
+      carouselIndicators.forEach((indicator, i) => {
+        indicator.style.opacity = i === index ? '1' : '0.5';
+        indicator.style.backgroundColor = i === index ? 'white' : 'white/50';
+      });
+      
+      currentSlide = index;
+    }
+    
+    prevButton.addEventListener('click', () => {
+      let newIndex = currentSlide - 1;
+      if (newIndex < 0) newIndex = carouselSlides.length - 1;
+      showSlide(newIndex);
+    });
+    
+    nextButton.addEventListener('click', () => {
+      let newIndex = currentSlide + 1;
+      if (newIndex >= carouselSlides.length) newIndex = 0;
+      showSlide(newIndex);
+    });
+    
+    carouselIndicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        showSlide(index);
+      });
+    });
+    
+    // Auto-advance carousel
+    setInterval(() => {
+      let newIndex = currentSlide + 1;
+      if (newIndex >= carouselSlides.length) newIndex = 0;
+      showSlide(newIndex);
+    }, 5000);
+    
+    // File upload functionality
+    const fileUploadArea = document.getElementById('file-upload-area');
+    const designFile = document.getElementById('design-file');
+    const filePreview = document.getElementById('file-preview');
+    const previewImage = document.getElementById('preview-image');
+    const removeFile = document.getElementById('remove-file');
+    const caseDesignOverlay = document.getElementById('case-design-overlay');
+    const designPreview = document.getElementById('design-preview');
+    
+    fileUploadArea.addEventListener('click', () => {
+      designFile.click();
+    });
+    
+    designFile.addEventListener('change', (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          designPreview.src = e.target.result;
+          filePreview.classList.remove('hidden');
+          caseDesignOverlay.style.opacity = '1';
+        };
+        
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    });
+    
+    removeFile.addEventListener('click', () => {
+      designFile.value = '';
+      filePreview.classList.add('hidden');
+      caseDesignOverlay.style.opacity = '0';
+    });
+    
+    // Scroll reveal functionality
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    function checkReveal() {
+      const windowHeight = window.innerHeight;
+      const revealPoint = 150;
+      
+      revealElements.forEach((element) => {
+        const revealTop = element.getBoundingClientRect().top;
+        
+        if (revealTop < windowHeight - revealPoint) {
+          element.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkReveal);
+    window.addEventListener('load', checkReveal);
+    
+    // Back to top button
+    const backToTopButton = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.remove('opacity-0', 'translate-y-10');
+      } else {
+        backToTopButton.classList.add('opacity-0', 'translate-y-10');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // Form submission handling
+    const contactForm = document.getElementById('contact-form');
+    const customizeForm = document.getElementById('customize-form');
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! We will get back to you soon.');
+        contactForm.reset();
+      });
+    }
+    
+    if (customizeForm) {
+      customizeForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your order! We will process it shortly.');
+        customizeForm.reset();
+        filePreview.classList.add('hidden');
+        caseDesignOverlay.style.opacity = '0';
+      });
+    }
+    
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        // Close mobile menu if open
+        if (!mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+        }
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>  
